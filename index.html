@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meu Amor por Você</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .typing {
+            border-right: 3px solid;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from,
+            to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: #ff6b81;
+            }
+        }
+
+        .photo-gallery {
+            display: none;
+            animation: fadeIn 1.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .love-message {
+            animation: slideIn 1s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .heart-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+<body
+    class="bg-gradient-to-b from-pink-50 to-red-50 min-h-screen font-['Montserrat'] overflow-x-hidden"
+>
+    <!-- Audio Element (hidden) -->
+    <audio id="romanticMusic" loop>
+        <source
+          src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+          type="audio/mpeg"
+        />
+    </audio>
+
+    <!-- Heart Rain Container -->
+    <div id="heartRain" class="heart-rain"></div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+        <!-- Header with Typing Effect -->
+        <header class="text-center mb-16">
+            <h1
+              id="typingText"
+              class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-600 mb-6 font-['Dancing_Script']"
+            ></h1>
+            <div class="w-24 h-1 bg-gradient-to-r from-pink-300 to-red-400 mx-auto mb-8"></div>
+            <p class="text-lg text-gray-600">
+                Cada dia ao seu lado é um presente que eu valorizo mais do que
+                tudo
+            </p>
+        </header>
+
+        <!-- Days Together Counter -->
+        <section
+          class="bg-white rounded-xl shadow-lg p-8 mb-12 text-center transform transition-all hover:scale-105"
+        >
+            <h2 class="text-2xl font-semibold text-pink-600 mb-4">Nossa Jornada</h2>
+            <div class="flex justify-center items-center">
+                <div class="text-center mx-4">
+                    <div
+                      id="daysCounter"
+                      class="text-5xl font-bold text-red-500 mb-2"
+                    >
+                      0
+                    </div>
+                    <div class="text-gray-500">Dias</div>
+                </div>
+                <div class="text-center mx-4">
+                    <div
+                      id="hoursCounter"
+                      class="text-5xl font-bold text-pink-500 mb-2"
+                    >
+                      0
+                    </div>
+                    <div class="text-gray-500">Horas</div>
+                </div>
+                <div class="text-center mx-4">
+                    <div
+                      id="minutesCounter"
+                      class="text-5xl font-bold text-rose-400 mb-2"
+                    >
+                      0
+                    </div>
+                    <div class="text-gray-500">Minutos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Button -->
+        <div class="text-center mb-16">
+            <button
+              id="galleryBtn"
+              class="bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform transition-all hover:scale-110 hover:shadow-xl active:scale-105 pulse"
+            >
+              Nossas Memórias
+            </button>
+        </div>
+
+        <!-- Photo Gallery (Hidden Initially) -->
+        <div
+          id="photoGallery"
+          class="photo-gallery grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
+        >
+            <div
+              class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all hover:scale-105"
+            >
+                <div
+                  class="h-48 bg-pink-100 flex items-center justify-center"
+                >
+                    <img
+                      src="img/cinzentos.jpg"
+                      alt="Sorriso dela"
+                      class="object-cover h-full w-full"
+                    />
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-700 italic">
+                        "Seu sorriso ilumina meus dias mais cinzentos."
+                    </p>
+                </div>
+            </div>
+
+            <div
+              class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all hover:scale-105"
+            >
+                <div
+                  class="h-48 bg-red-100 flex items-center justify-center"
+                >
+                    <img
+                      src="img/momento.jpg"
+                      alt="Momentos especiais"
+                      class="object-cover h-full w-full"
+                    />
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-700 italic">
+                        "Cada momento contigo é especial."
+                    </p>
+                </div>
+            </div>
+
+            <div
+              class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all hover:scale-105"
+            >
+                <div
+                  class="h-48 bg-rose-100 flex items-center justify-center"
+                >
+                    <img
+                      src="img/sorriso.jpg"
+                      alt="Razão do sorriso"
+                      class="object-cover h-full w-full"
+                    />
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-700 italic">
+                        "Você é a razão do meu sorriso."
+                    </p>
+                </div>
+            </div>
+
+            <div
+              class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all hover:scale-105"
+            >
+                <div
+                  class="h-48 bg-pink-50 flex items-center justify-center"
+                >
+                    <img
+                      src="img/bate.jpg"
+                      alt="Coração batendo"
+                      class="object-cover h-full w-full"
+                    />
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-700 italic">"Meu coração bate por você."</p>
+                </div>
+            </div>
+
+            <div
+              class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all hover:scale-105"
+            >
+                <div
+                  class="h-48 bg-red-50 flex items-center justify-center"
+                >
+                    <img
+                      src="img/felicidade.jpg"
+                      alt="Felicidade juntos"
+                      class="object-cover h-full w-full"
+                    />
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-700 italic">"Você é a minha felicidade."</p>
+                </div>
+            </div>
+
+            <div
+              class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all hover:scale-105"
+            >
+                <div
+                  class="h-48 bg-rose-50 flex items-center justify-center"
+                >
+                    <img
+                      src="img/detalhe.jpg"
+                      alt="Cada detalhe dela"
+                      class="object-cover h-full w-full"
+                    />
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-700 italic">"Amo cada detalhe seu."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Love Messages Carousel -->
+        <section class="text-center mb-12">
+            <div id="loveMessages" class="text-xl text-gray-700 italic">
+                Você é a pessoa que me faz acreditar no amor todos os dias.
+            </div>
+            <div class="flex justify-center mt-6">
+                <button
+                  id="nextMessageBtn"
+                  class="bg-pink-100 text-pink-600 p-2 rounded-full hover:bg-pink-200 transition-colors"
+                >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Surprise Button -->
+        <div class="text-center">
+            <button
+              id="surpriseBtn"
+              class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform transition-all hover:scale-110 hover:shadow-xl active:scale-105 floating"
+            >
+              Surpresa Especial!
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Hearts Background -->
+    <div id="floatingHearts"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Typing Effect
+            const typingText = document.getElementById("typingText");
+            const messages = [
+                "O quanto eu te amo, meu amor",
+                "Você é a luz da minha vida",
+                "Meu coração é seu para sempre",
+            ];
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function typeWriter() {
+                const currentMessage = messages[messageIndex];
+
+                if (isDeleting) {
+                    typingText.textContent = currentMessage.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typingText.textContent = currentMessage.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                if (!isDeleting && charIndex === currentMessage.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, 1500);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    setTimeout(typeWriter, 300);
+                } else {
+                    setTimeout(typeWriter, isDeleting ? 50 : 100);
+                }
+            }
+            typeWriter();
+
+            // Days Together Counter
+            const startDate = new Date("2025-03-23T17:30:00");
+            const daysCounter = document.getElementById("daysCounter");
+            const hoursCounter = document.getElementById("hoursCounter");
+            const minutesCounter = document.getElementById("minutesCounter");
+
+            function updateCounters() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+                daysCounter.textContent = days;
+                hoursCounter.textContent = hours;
+                minutesCounter.textContent = minutes;
+            }
+
+            updateCounters();
+            setInterval(updateCounters, 60000);
+
+            // Photo Gallery Toggle
+            const galleryBtn = document.getElementById("galleryBtn");
+            const photoGallery = document.getElementById("photoGallery");
+
+            galleryBtn.addEventListener("click", () => {
+                if (photoGallery.style.display === "grid") {
+                    photoGallery.style.display = "none";
+                } else {
+                    photoGallery.style.display = "grid";
+                }
+            });
+
+            // Love Messages Carousel
+            const loveMessages = [
+                "Você é a pessoa que me faz acreditar no amor todos os dias.",
+                "Com você, cada instante é eterno.",
+                "Nosso amor é a minha maior força.",
+                "Obrigado por ser meu porto seguro.",
+                "Eu te amo mais a cada dia que passa."
+            ];
+
+            const messageContainer = document.getElementById("loveMessages");
+            const nextMessageBtn = document.getElementById("nextMessageBtn");
+            let currentLoveMessageIndex = 0;
+
+            function showNextMessage() {
+                currentLoveMessageIndex =
+                    (currentLoveMessageIndex + 1) % loveMessages.length;
+                messageContainer.textContent = loveMessages[currentLoveMessageIndex];
+                // Adiciona animação de fade
+                messageContainer.classList.remove("love-message");
+                void messageContainer.offsetWidth; // trigger reflow
+                messageContainer.classList.add("love-message");
+            }
+
+            if (nextMessageBtn && messageContainer) {
+                nextMessageBtn.addEventListener("click", showNextMessage);
+            }
+
+            // Surprise Button + Heart Rain + Music
+            const surpriseBtn = document.getElementById("surpriseBtn");
+            const heartRain = document.getElementById("heartRain");
+            const romanticMusic = document.getElementById("romanticMusic");
+
+            surpriseBtn.addEventListener("click", () => {
+                // Start Heart Rain
+                for (let i = 0; i < 50; i++) {
+                    createHeart();
+                }
+                setInterval(createHeart, 500);
+
+                // Play music
+                romanticMusic.play();
+
+                // Surprise alert
+                alert("Você é meu amor para sempre! ❤️");
+            });
+
+            function createHeart() {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.fontSize = 20 + Math.random() * 20 + "px";
+                heart.style.color = "rgba(255, 105, 180, " + Math.random() + ")";
+                heart.textContent = "❤️";
+                heart.style.top = window.innerHeight + "px";
+
+                heartRain.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+
+            // Floating Hearts Background
+            const floatingHeartsContainer = document.getElementById("floatingHearts");
+
+            function createFloatingHeart() {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.top = Math.random() * window.innerHeight + "px";
+                heart.style.fontSize = 15 + Math.random() * 15 + "px";
+                heart.style.color = "rgba(255, 105, 180, 0.5)";
+                heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+                heart.textContent = "❤️";
+
+                floatingHeartsContainer.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }
+
+            setInterval(createFloatingHeart, 800);
+        });
+    </script>
+</body>
+</html>
